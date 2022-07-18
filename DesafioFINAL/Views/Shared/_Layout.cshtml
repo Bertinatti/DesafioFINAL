@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Controle de Estoque</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DesafioFINAL.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"
+        integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black text-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> 
+                    <img src="https://atos.net/wp-content/themes/atos/images/atos-logo-white-2021.png" class="m-0 pb-1 ms-2" width="115" height="28" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Produtos" asp-action="Index">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="LogProdutos" asp-action="Index">Log de Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Cadastrar Usuário</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="text-center text-white fixed-bottom border-top text-muted">
+        <!-- Grid Rodapé -->
+        <div class="container pt-2">
+            <!-- Mídias Sociais - Rodapé -->
+            <section class="mb-3">
+                <!-- Facebook -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.facebook.com/cardbtt/"
+                    target="_blank"><i class="bi bi-facebook"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!"><i class="bi bi-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!"><i class="bi bi-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1"
+                    href="https://www.instagram.com/leobertinatti/" target="_blank"><i class="bi bi-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1"
+                    href="https://www.linkedin.com/in/leobertinatti/" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <!-- Github -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://github.com/Bertinatti/"
+                    target="_blank"><i class="bi bi-github"></i></a>
+            </section>
+            <!-- Fim das Mídias Sociais Rodapé -->
+        </div>
+        <!-- Grid Rodapé -->
+
+        <!-- Copyright -->
+        <div class="text-center text-light p-4" style="background-color: rgb(0, 0, 0);">© 2022 Copyright:
+            <a class="text-light" href="https://github.com/Bertinatti" target="_blank">Bertinatti</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.mask/jquery.mask.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript" asp-append-version="true"></script>      
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('#cep').mask("00000-000"), { placeholder: "_____-___" };
+            $('#cnpj').mask("00.000.000/0000-00"), { placeholder: "__.___.___/____-__" };
+            $('#estado').mask("AA");
+        });
+
+        $(document).ready(function () {
+            $('#tabela-produtos').DataTable({              
+                lengthChange:false,
+                processing: false,
+                ordering:false,               
+                paging:true,
+                searching:true,
+                responsive:true,
+                pageLength: 9,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json'
+                }
+            });
+        });
+        
+        $(document).ready(function () {
+            $('#tabela-log-produtos').DataTable({             
+                lengthChange:false,
+                processing: false,
+                ordering:false,               
+                paging:true,
+                searching:true,
+                responsive:true,
+                pageLength: 9,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json'
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tabela-usuario').DataTable({             
+                lengthChange:false,
+                processing: false,
+                ordering:false,               
+                paging:true,
+                searching:true,
+                responsive:true,
+                pageLength: 9,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json'
+                }
+            });
+        });                       
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

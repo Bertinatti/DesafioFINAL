@@ -1,0 +1,58 @@
+﻿@model DesafioFINAL.Produto
+
+@{
+    ViewData["Title"] = "Cadastrar Produto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cadastrar</h1>
+
+<h4>Produto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="CodigoEAN" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="CodigoEAN" class="control-label"></label>
+                <span asp-validation-for="CodigoEAN" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <input asp-for="Nome" class="form-control" autocomplete="username" aria-required="true"/>
+                <label asp-for="Nome" class="control-label"></label>
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <input asp-for="Preco" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Preco" class="control-label"></label>
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <input asp-for="Estoque" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Estoque" class="control-label"></label>
+                <span asp-validation-for="Estoque" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <input asp-for="CNPJFornecedor" class="form-control" autocomplete="username" aria-required="true" id="cnpj" />
+                <label asp-for="CNPJFornecedor" class="control-label"></label>
+                <span asp-validation-for="CNPJFornecedor" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <input asp-for="Fornecedor" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Fornecedor" class="control-label"></label>
+                <span asp-validation-for="Fornecedor" class="text-danger"></span>
+            </div>           
+            <div class="form-group pt-2">
+                <input type="submit" value="Cadastrar" class="w-100 btn btn-lg btn-outline-primary"/>               
+            </div>
+        </form>
+        <div>
+            <a class="w-100 btn btn-lg btn-outline-dark mt-2" asp-action="Index">Voltar para a lista</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

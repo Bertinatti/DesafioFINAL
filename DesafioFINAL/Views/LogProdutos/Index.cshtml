@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DesafioFINAL.Models.LogProdutos>
+
+@{
+    ViewData["Title"] = "Logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a class="btn btn-outline-dark position-absolute" style="z-index:3" asp-action="Create"> Novo Log</a>
+</p>
+ 
+<table id="tabela-log-produtos" class="table pb-3 pt-3" >
+    <thead class="bg-black text-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcaoLog)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataLog)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcaoLog)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLog)
+            </td>
+            <td>
+                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.IdLog">Editar</a>
+                <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@item.IdLog">Detalhes</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.IdLog">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+    <tfoot class="bg-black text-light pb-2">
+        <tr>
+            <th colspan="4" class="text-center pb-3">
+                Log de Produtos - Ações dos usuários no sistema. 
+            </th>
+        </tr>
+    </tfoot>
+</table>

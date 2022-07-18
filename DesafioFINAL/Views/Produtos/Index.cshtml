@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DesafioFINAL.Produto>
+
+@{
+    ViewData["Title"] = "Produtos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Botão para criar um novo registro de produto -->
+<p>
+    <a class="btn btn-outline-dark position-absolute" style="z-index:3" asp-action="Create">Novo Produto</a>
+</p>
+
+<table id="tabela-produtos" class="table pb-3 pt-3">
+    <thead class="bg-black text-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoEAN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estoque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fornecedor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Popular a view com os itens da tabela de produto -->
+@foreach (var item in Model) {
+            <!-- Escondendo a entidade PRODUTO DELETADO, que é uma entidade auxiliar para a tabela log produto em caso de deleção de determinado produto -->
+            if (!item.Nome.Equals("PRODUTO DELETADO"))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodigoEAN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estoque)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fornecedor)
+                    </td>
+                    <td>
+                        <!-- Botão para editar o produto -->
+                        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.IdProduto">Editar</a>
+                        <!-- Botão para ver os detalhes do produto -->
+                        <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@item.IdProduto">Detalhes</a>
+                        <!-- Botão para deletar o produto -->
+                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.IdProduto">Deletar</a>
+                    </td>
+                </tr>
+            }           
+}
+    </tbody>
+    <tfoot class="bg-black text-light pb-1">
+        <tr>
+            <th colspan="5" class="text-center pb-3">
+                Produtos - Listagem das mercadorias cadastradas.
+            </th>
+        </tr>
+    </tfoot>
+</table>
