@@ -5,13 +5,12 @@
   ViewData["Title"] = "Entrar";
 }
 
-@*<div class="row">*@
 <div class="container">
         <section>
             <form id="account" method="post">
                 <h2>Use sua conta para fazer o login.</h2>
                 <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>                                         
+                <div asp-validation-summary="ModelOnly" class="text-danger "></div>                                         
                     <div class="col-md-6 offset-md-3 p-2">                  
                         <div class="form-floating mb-3">
                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />

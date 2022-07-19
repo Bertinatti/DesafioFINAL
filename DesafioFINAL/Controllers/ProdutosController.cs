@@ -47,6 +47,16 @@ namespace DesafioFINAL.Controllers
                 return NotFound();
             }
 
+            _context.LogProdutos.Add(new LogProdutos
+            {
+                EmailUsuario = User.Identity.Name,
+                IdProduto = produto.IdProduto,
+                AcaoLog = String.Concat("Usuário exibiu o produto: ", produto.Nome.ToUpper()),
+                DataLog = DateTime.Now,
+
+            });
+            _context.SaveChanges();
+
             return View(produto);
         }
 
