@@ -23,6 +23,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DesafioFINAL.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Acesso restrito aos usuários logados e com a role(função) de administrador
+    /// </summary>
     [Authorize(Roles ="Administrador")]
     public class RegisterModel : PageModel
     {

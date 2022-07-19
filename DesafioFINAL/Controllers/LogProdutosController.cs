@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DesafioFINAL.Controllers
 {
+    /// <summary>
+    /// Acesso restrito aos usuários logados e com a role(função) de administrador
+    /// </summary>
     [Authorize(Roles = "Administrador")]
     public class LogProdutosController : Controller
     {
@@ -22,17 +25,23 @@ namespace DesafioFINAL.Controllers
         {
             _context = context;
             _userManager = userManager;
-
         }
-
-        // GET: LogProdutos
+       
+        /// <summary>
+        /// Método da controller de LogProdutos que captura os dados do banco e monta a view com os dados.
+        /// </summary>
+        /// <returns>Retorna a view Inicial do Log de Produtos com os dados capturados do banco.</returns>
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.LogProdutos.Include(l => l.Produto);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: LogProdutos/Details/5
+        /// <summary>
+        /// Método da controller de LogProdutos que exibe a view Details. 
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, capturado pelo clique do botão e enviado através de asp-route.</param>
+        /// <returns>Retorna a view com os Detalhes desse Log.</returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.LogProdutos == null)
@@ -51,16 +60,22 @@ namespace DesafioFINAL.Controllers
             return View(logProdutos);
         }
 
-        // GET: LogProdutos/Create
+        /// <summary>
+        /// Método da controller de LogProdutos que exibe a view Create.
+        /// </summary>
+        /// <returns>Retorna a view de Criação de um novo LogProdutos.</returns>
         public IActionResult Create()
         {
+            // ViewData com os Produtos cadastrados no banco, para popular um select de Produtos da view Create
             ViewData["IdProduto"] = new SelectList(_context.Produto, "IdProduto", "Nome");
             return View();
         }
 
-        // POST: LogProdutos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Método da controller de LogProdutos para efetuar o Post com os dados do novo LogProdutos que será salvo no banco.
+        /// </summary>
+        /// <param name="logProdutos">Objeto da Classe LogProdutos que será salvo no banco.</param>
+        /// <returns>Retorna para a Index, em caso de sucesso, ou exibe quais campos estão errados, permanecendo na tela de Criação.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdLog,EmailUsuario,IdProduto,AcaoLog,DataLog")] LogProdutos logProdutos)
@@ -68,7 +83,7 @@ namespace DesafioFINAL.Controllers
             bool emailExistente = _userManager.Users.Any(x => x.Email == logProdutos.EmailUsuario);
             if (emailExistente == false)
             {
-                ModelState.AddModelError("EmailUsuario", "Usuário não está cadatraddo");
+                ModelState.AddModelError("EmailUsuario", "Usuário não está cadastrado");
             }
 
             if (ModelState.IsValid)
@@ -81,7 +96,11 @@ namespace DesafioFINAL.Controllers
             return View(logProdutos);
         }
 
-        // GET: LogProdutos/Edit/5
+        /// <summary>
+        /// Método da controller de LogProdutos que exibe a view Edit.
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, capturado pelo clique do botão e enviado através de asp-route.</param>
+        /// <returns>Retorna a view de Edição com os dados salvos do Log.</returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.LogProdutos == null)
@@ -98,9 +117,12 @@ namespace DesafioFINAL.Controllers
             return View(logProdutos);
         }
 
-        // POST: LogProdutos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Método da controller de LogProdutos para efetuar o Post com os dados editados do LogProduto que será atualizado.
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, que foi capturado no método acima durante o redirecionamento para essa view, através do clique de um botão e por asp-route.</param>
+        /// <param name="logProdutos">Objeto da Classe LogProdutos que terá seus dados atualizados.</param>
+        /// <returns>Retorna para a Index, em caso de sucesso, ou exibe quais campos estão errados, permanecendo na tela de Edição.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdLog,EmailUsuario,IdProduto,AcaoLog,DataLog")] LogProdutos logProdutos)
@@ -110,7 +132,10 @@ namespace DesafioFINAL.Controllers
                 return NotFound();
             }
 
+            // Verifica se o e-mail/usuário existe no banco
             bool emailExistente = _userManager.Users.Any(x => x.Email == logProdutos.EmailUsuario);
+
+
             if (emailExistente == false)
             {
                 ModelState.AddModelError("EmailUsuario", "Usuário não está cadatraddo.");
@@ -140,7 +165,11 @@ namespace DesafioFINAL.Controllers
             return View(logProdutos);
         }
 
-        // GET: LogProdutos/Delete/5
+        /// <summary>
+        /// Método da controller de LogProdutos que exibe a view Delete
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, capturado pelo clique do botão e enviado através de asp-route.</param>
+        /// <returns>Retorna a view de Deleção com os dados salvos do Log.</returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.LogProdutos == null)
@@ -159,7 +188,11 @@ namespace DesafioFINAL.Controllers
             return View(logProdutos);
         }
 
-        // POST: LogProdutos/Delete/5
+        /// <summary>
+        /// Método da controller de LogProdutos para efetuar o Post com os dados do Log que será deletado.
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, que foi capturado no método acima durante o redirecionamento para essa view, através do clique de um botão e por asp-route.</param>
+        /// <returns>Retorna para a Index, em caso de sucesso, ou exibe os erros da Deleção.</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -178,6 +211,11 @@ namespace DesafioFINAL.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Método privado da controller de LodProdutos para verificar se o Log existe no banco.
+        /// </summary>
+        /// <param name="id">Id do LogProdutos, de tipo INT, passado durante a chamada do método.</param>
+        /// <returns>Retorna um valor booleano, indicando se o Log existe ou não.</returns>
         private bool LogProdutosExists(int id)
         {
           return (_context.LogProdutos?.Any(e => e.IdLog == id)).GetValueOrDefault();

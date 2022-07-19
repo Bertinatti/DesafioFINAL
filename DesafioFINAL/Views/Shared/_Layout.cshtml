@@ -14,6 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <!-- Cabeçalho da página -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black text-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -49,6 +50,7 @@
         </nav>
     </header>
 
+    <!-- Local onde serão instanciadas as views -->
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -98,13 +100,14 @@
     <script src="~/lib/jquery.mask/jquery.mask.js" type="text/javascript" asp-append-version="true"></script>
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript" asp-append-version="true"></script>      
     <script type="text/javascript">
-
+        // Script de máscara para os campos de cep, cnpj e estado.
         $(document).ready(function(){
             $('#cep').mask("00000-000"), { placeholder: "_____-___" };
             $('#cnpj').mask("00.000.000/0000-00"), { placeholder: "__.___.___/____-__" };
             $('#estado').mask("AA");
         });
 
+        // Script de DataTable para a tabela de produtos.
         $(document).ready(function () {
             $('#tabela-produtos').DataTable({              
                 lengthChange:false,
@@ -120,6 +123,7 @@
             });
         });
         
+        // Script de DataTable para a tabela de logs.
         $(document).ready(function () {
             $('#tabela-log-produtos').DataTable({             
                 lengthChange:false,
@@ -134,21 +138,7 @@
                 }
             });
         });
-
-        $(document).ready(function () {
-            $('#tabela-usuario').DataTable({             
-                lengthChange:false,
-                processing: false,
-                ordering:false,               
-                paging:true,
-                searching:true,
-                responsive:true,
-                pageLength: 9,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json'
-                }
-            });
-        });                       
+                      
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

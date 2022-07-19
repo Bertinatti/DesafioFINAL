@@ -15,17 +15,27 @@ namespace DesafioFINAL.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Método que chama a exibição da página Index da Home. 
+        /// </summary>
+        /// <returns>Retorna a visualização da página Inicial</returns>
         [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-
+        /// <summary>
+        /// Método que chama a exibição da página Privacy da Home
+        /// </summary>
+        /// <returns>Retorna a visualização da página de Privacidade</returns>
         public IActionResult Privacy()
         {
             return View();
         }
-
+        /// <summary>
+        /// Método que chama a exibição da página Error da Home
+        /// </summary>
+        /// <returns>Retorna ai visualização da página de Erros</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
